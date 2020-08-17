@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  traefik_reverse_proxy:
+      image: traefik:1.7.17
+      container_name: traefikRuler
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - ./traefik.toml:/etc/traefik/traefik.toml
+        - ./acme.json:/acme.json
+      networks:
+        - traefikNetwork
+      ports:
+        - 80:80
+        - 8080:8080
+        - 443:443
+      expose:
+        - 8080
+      labels:
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:yourUrl;PathPrefixStrip:/traefik
+        -traefik.port=8080
+      restart: always
+
+networks:
+  traefikNetwork:
+      external: false
+      name: traefikNetwork
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.2.0.0/16
