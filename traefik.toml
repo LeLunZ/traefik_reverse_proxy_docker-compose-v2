@@ -1,5 +1,8 @@
+[global]
+  sendAnonymousUsage = false
+
 [log]
-  level = "ERROR"
+  level = "DEBUG"
   filePath = "./traefik.log"
 
 [entryPoints.web]
@@ -22,7 +25,10 @@
 [api]
   dashboard = true
 
-[providers.docker]
-endpoint = "unix:///var/run/docker.sock"
-network = "traefikNetwork"
-exposedByDefault = false
+[providers]
+  [providers.docker]
+    endpoint = "unix:///var/run/docker.sock"
+    network = "traefikNetwork"
+    exposedByDefault = false
+  [providers.file]
+    filename = "traefik.toml"
