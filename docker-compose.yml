@@ -18,8 +18,9 @@ services:
         - 8080
       labels:
         - traefik.enable=true
-        - traefik.frontend.rule=Host:yourUrl;PathPrefixStrip:/traefik
-        - traefik.port=8080
+        - "traefik.http.routers.admin.rule=Host(`example.org`) && PathPrefix(`/admin`)"
+        - "traefik.http.routers.admin.middlewares=admin-stripprefix"
+        - "traefik.http.middlewares.admin-stripprefix.stripprefix.prefixes=/admin"
       restart: always
 
 networks:
