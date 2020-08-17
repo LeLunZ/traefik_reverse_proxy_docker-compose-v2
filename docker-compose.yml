@@ -18,9 +18,10 @@ services:
         - 8080
       labels:
         - traefik.enable=true
-        - "traefik.http.routers.admin.rule=Host(`example.org`) && PathPrefix(`/admin`)"
-        - "traefik.http.routers.admin.middlewares=admin-stripprefix"
-        - "traefik.http.middlewares.admin-stripprefix.stripprefix.prefixes=/admin"
+        - "traefik.http.routers.dashboard.rule=Host(`traefik.example.com`) && PathPrefix(`/dashboard`)"
+        - "traefik.http.routers.dashboard.service=api@internal"
+        - "traefik.http.routers.dashboard.middlewares=auth"
+        - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
       restart: always
 
 networks:
