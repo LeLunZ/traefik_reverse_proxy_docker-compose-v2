@@ -2,8 +2,8 @@ version: '3.7'
 
 services:
   traefik_reverse_proxy:
-      image: traefik:1.7.17
-      container_name: traefikRuler
+      image: "traefik:v2.2"
+      container_name: traefik
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - ./traefik.toml:/etc/traefik/traefik.toml
